@@ -5,360 +5,239 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Choix Bracelet de Montre</title>
   <meta name="robots" content="noindex,nofollow" />
+
   <style>
     :root{
       --bg:#0b0f14; --card:#101826; --muted:#9fb0c3; --text:#e8f0ff; --accent:#6aa6ff;
       --border:rgba(255,255,255,.08); --shadow:0 12px 30px rgba(0,0,0,.35);
       --radius:18px;
-      font-synthesis-weight:none;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; background:radial-gradient(1200px 900px at 20% 0%, #111c2d, transparent 60%),
-                      radial-gradient(900px 700px at 80% 20%, #0f2a2a, transparent 60%),
-                      var(--bg);
+      margin:0;
+      background:radial-gradient(1200px 900px at 20% 0%, #111c2d, transparent 60%),
+                 radial-gradient(900px 700px at 80% 20%, #0f2a2a, transparent 60%),
+                 var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      line-height:1.4;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     }
-    a{color:inherit}
-    .wrap{max-width:1120px; margin:0 auto; padding:28px 16px 44px}
-    header{
-      display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-    .title{display:flex; flex-direction:column; gap:6px}
-    h1{margin:0; font-size:22px; letter-spacing:.2px}
-    .sub{color:var(--muted); font-size:13px; max-width:70ch}
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 16px 44px}
+    header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    h1{margin:0;font-size:22px}
+    .sub{color:var(--muted);font-size:13px;max-width:70ch}
+
     .toolbar{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      display:flex;gap:10px;flex-wrap:wrap;
       background:rgba(255,255,255,.03);
       border:1px solid var(--border);
-      padding:10px; border-radius:var(--radius);
-      box-shadow: var(--shadow);
+      padding:10px;border-radius:var(--radius);
+      box-shadow:var(--shadow)
     }
-    .chipbar{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      padding:7px 10px;
-      border-radius:999px;
-      cursor:pointer;
-      font-size:12px;
-      user-select:none;
-      transition:.15s ease;
-      display:inline-flex; gap:6px; align-items:center;
-    }
-    .chip.active{
-      border-color:rgba(106,166,255,.55);
-      background:rgba(106,166,255,.12);
-    }
-    .chip:hover{transform:translateY(-1px)}
     .search{
       border:1px solid var(--border);
       background:rgba(255,255,255,.03);
       color:var(--text);
       padding:8px 10px;
       border-radius:12px;
-      min-width:240px;
-      outline:none;
+      min-width:220px
     }
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-      margin-top:12px;
+    .chip{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      cursor:pointer
     }
+    .chip.active{
+      border-color:rgba(106,166,255,.6);
+      background:rgba(106,166,255,.15)
+    }
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:18px}
     .card{
-      grid-column: span 6;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      grid-column:span 6;
+      background:rgba(255,255,255,.04);
       border:1px solid var(--border);
       border-radius:var(--radius);
       overflow:hidden;
-      box-shadow: var(--shadow);
-      position:relative;
-      transition:.18s ease;
-      cursor:pointer;
+      box-shadow:var(--shadow);
+      cursor:pointer
     }
-    .card:hover{transform:translateY(-2px)}
-    .card.selected{
-      border-color: rgba(106,166,255,.7);
-      box-shadow: 0 16px 45px rgba(0,0,0,.45);
-    }
-    .top{
-      padding:14px 14px 10px;
-      display:flex; flex-direction:column; gap:8px;
-    }
-    .row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
-    .brand{color:var(--muted); font-size:12px}
-    .name{font-size:16px; margin:0}
-    .badges{display:flex; gap:7px; flex-wrap:wrap}
+    .card.selected{border-color:rgba(106,166,255,.7)}
+    .top{padding:14px}
+    .brand{font-size:12px;color:var(--muted)}
+    .name{margin:4px 0 6px;font-size:16px}
     .badge{
-      font-size:11px; color:#cfe0ff;
-      background:rgba(106,166,255,.10);
-      border:1px solid rgba(106,166,255,.22);
-      padding:5px 8px; border-radius:999px;
+      display:inline-block;
+      font-size:11px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(106,166,255,.15);
+      border:1px solid rgba(106,166,255,.25)
     }
-    .desc{color:var(--muted); font-size:13px; margin:0}
-    .images{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:0;
-      border-top:1px solid var(--border);
-    }
-    .images img{
-      width:100%; height:240px; object-fit:cover; display:block;
-      background:#0a0f16;
-    }
+    .desc{font-size:13px;color:var(--muted);margin-top:8px}
+
+    .images{display:grid;grid-template-columns:1fr 1fr}
+    .images img{width:100%;height:260px;object-fit:cover}
+
     .actions{
-      display:flex; gap:10px; align-items:center; justify-content:space-between;
-      padding:12px 14px 14px;
-      border-top:1px solid var(--border);
-      background:rgba(0,0,0,.18);
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 14px;border-top:1px solid var(--border)
     }
     .btn{
-      display:inline-flex; gap:8px; align-items:center; justify-content:center;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      padding:9px 10px;
-      border-radius:12px;
       font-size:12px;
-      text-decoration:none;
-      transition:.15s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
-    .btn.primary{
-      border-color:rgba(106,166,255,.55);
-      background:rgba(106,166,255,.14);
-    }
-    .footerbar{
-      margin-top:14px;
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-      padding:12px 14px;
+      padding:8px 10px;
+      border-radius:10px;
       border:1px solid var(--border);
-      border-radius:var(--radius);
-      background:rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
+      text-decoration:none;
+      color:var(--text)
     }
-    .pick{display:flex; flex-direction:column; gap:3px}
-    .pick .label{color:var(--muted); font-size:12px}
-    .pick .value{font-size:13px}
-    .small{color:var(--muted); font-size:12px}
-    @media (max-width: 920px){
-      .card{grid-column: span 12}
+    .btn.primary{
+      border-color:rgba(106,166,255,.6);
+      background:rgba(106,166,255,.15)
+    }
+
+    @media(max-width:900px){
+      .card{grid-column:span 12}
       .images img{height:220px}
-      .search{min-width: 180px; flex: 1}
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="title">
-        <h1>Choix du bracelet de montre</h1>
-        <div class="sub">
-          Clique un bracelet pour le sélectionner. Filtre par marque ou cherche par mot-clé (matière, “navy”, etc.).
-          <span class="small">(* Site statique : 1 fichier, parfait pour GitHub Pages.)</span>
-        </div>
-      </div>
+<div class="wrap">
 
-      <div class="toolbar">
-        <input id="search" class="search" placeholder="Rechercher… (ex: chevre, saffiano, rubber, alligator)" />
-        <div class="chipbar" id="chips"></div>
-      </div>
-    </header>
-
-    <div class="footerbar">
-      <div class="pick">
-        <div class="label">Sélection actuelle</div>
-        <div class="value" id="pickedValue">Aucune</div>
-      </div>
-      <a class="btn primary" id="pickedLink" href="#" target="_blank" rel="noopener">Ouvrir la page produit</a>
-    </div>
-
-    <div class="grid" id="grid"></div>
+<header>
+  <div>
+    <h1>Choix du bracelet de montre</h1>
+    <div class="sub">Sélectionne un bracelet – cuir, sailcloth ou alligator – puis ouvre la page produit.</div>
   </div>
+  <div class="toolbar">
+    <input id="search" class="search" placeholder="Rechercher (chevre, saffiano…)" />
+    <div id="chips"></div>
+  </div>
+</header>
+
+<div class="grid" id="grid"></div>
+
+</div>
 
 <script>
-  const straps = [
-    {
-      id: "handdn-togo-navy",
-      brand: "HANDDN",
-      name: "Navy Togo Leather Watch Strap",
-      material: "Togo calf leather + lining Zermatt (renfort Velodon)",
-      desc: "Cuir de veau Togo : grain marqué et très souple, pensé pour le confort au quotidien (doublure Zermatt, renfort interne).",
-      url: "https://handdn.com/product/navy-togo-leather-watch-strap/",
-      img1: "https://www.watchvault.com.au/cdn/shop/files/TogoCalfLeatherWatchStrapWatchVaultNavy01_e94140b1-4b59-479e-9dd6-9b9563fc6b59_2048x2048.jpg?v=1689055464",
-      img2: "https://www.watchvault.com.au/cdn/shop/files/TogoCalfLeatherWatchStrapWatchVaultNavy02_a708cf20-c5bc-4e88-bd5e-a1fb000bb665_2048x2048.jpg?v=1689055464"
-    },
-    {
-      id: "delugs-chevre-slim-navy",
-      brand: "Delugs",
-      name: "Navy Chevre Slim Strap",
-      material: "Chevre (Alran) – cuir de chèvre",
-      desc: "Chevre Alran : texture naturellement grainée, très douce, avec de bonnes propriétés de résistance (eau/griffures).",
-      url: "https://delugs.com/collections/handcrafted-leather-straps/products/navy-chevre-leather-slim-watch-strap?_pos=8&_fid=89be8c1da&_ss=c",
-      img1: "https://delugs.com/cdn/shop/files/ChevreNavySlim_1_79e4a6cf-265f-4994-8fe8-f01e5fdbab42_160x200_crop_center.jpg?v=1729219489",
-      img2: "https://delugs.com/cdn/shop/files/20210924-DSC08345_7d86ac49-d94f-43fd-9344-3afccc3f4b45_160x200_crop_center.jpg?v=1729219489"
-    },
-    {
-      id: "delugs-alligator-matte-navy",
-      brand: "Delugs",
-      name: "Matte Navy Alligator Signature Strap",
-      material: "Alligator (véritable, non embossé)",
-      desc: "Alligator matte navy : le grand classique “dressy” qui habille instantanément une montre (texture distinctive).",
-      url: "https://delugs.com/collections/handcrafted-leather-straps/products/matte-navy-alligator-leather-signature-watch-strap?_pos=1&_fid=199187605&_ss=c",
-      img1: "https://delugs.com/cdn/shop/files/AlligatorMatteNavySignature_1_f7cd9e3f-8958-4441-970d-4280c129879d_160x200_crop_center.jpg?v=1729157077",
-      img2: "https://delugs.com/cdn/shop/files/20221019-DSC04926_9ed2398d-09ac-4468-a982-f736979c5815_160x200_crop_center.jpg?v=1729157077"
-    },
-    {
-      id: "handdn-chevre-navy",
-      brand: "HANDDN",
-      name: "Navy Alran Chevre Leather Watch Strap",
-      material: "Alran Chevre (goat) + lining Zermatt (renfort Velodon)",
-      desc: "Chevre Alran : strap souple et luxueux, surface fine, agréable en main; doublure Zermatt + renfort interne.",
-      url: "https://handdn.com/product/navy-alran-chevre-leather-watch-strap/",
-      img1: "https://www.watchvault.com.au/cdn/shop/files/AlranChevreLeatherWatchStrapWatchVaultNavyBlue02_958aa4f8-3fa2-4617-9562-a05b45705025_2048x2048.jpg?v=1688962744",
-      img2: "https://www.watchvault.com.au/cdn/shop/files/AlranChevreLeatherWatchStrapWatchVaultNavyBlue03_763b1dc5-3e7e-402c-bb66-71242c247583_2048x2048.jpg?v=1688962744"
-    },
-    {
-      id: "handdn-saffiano-navy",
-      brand: "HANDDN",
-      name: "Navy Saffiano Leather Watch Strap",
-      material: "Saffiano + lining Zermatt (renfort Velodon)",
-      desc: "Saffiano : grain régulier (type embossé), réputé pour la résistance (eau/griffures).",
-      url: "https://handdn.com/product/navy-saffiano-leather-watch-strap/",
-      img1: "https://www.watchvault.com.au/cdn/shop/files/SaffianoLeatherWatchStrapWatchVaultRoyalBlue01_c592d13a-6b25-4572-86eb-a756fc70af96_2048x2048.jpg?v=1689053564",
-      img2: "https://www.watchvault.com.au/cdn/shop/files/SaffianoLeatherWatchStrapWatchVaultRoyalBlue02_3863ecba-1a44-436f-81f2-81858c3dc568_2048x2048.jpg?v=1689053564"
-    },
-    {
-      id: "wristbuddys-sailcloth-navy",
-      brand: "Wristbuddys",
-      name: "Navy Blue Rubberised Sailcloth Leather Strap",
-      material: "Sailcloth rubberisé (type toile de voile) + cuir",
-      desc: "Look “tool watch” : style sailcloth rubberisé, plus sportif et tolérant à l’usage.",
-      url: "https://wristbuddys.com/en-fr/products/navy-blue-rubberised-sailcloth-leather-strap-19mm-20mm?variant=51974652363079",
-      img1: "https://wristbuddys.com/cdn/shop/files/navy-blue-rubberised-sailcloth-leather-watch-strap-wristbuddys-front_160x200.jpg?v=1735027959",
-      img2: "https://wristbuddys.com/cdn/shop/files/navy-blue-rubberised-sailcloth-leather-watch-strap-wristbuddys-onwrist_160x200.jpg?v=1735027959"
-    },
-    {
-      id: "delugs-saffiano-stitchless-navy",
-      brand: "Delugs",
-      name: "Navy Saffiano Stitchless Strap",
-      material: "Saffiano (grain embossé) – style stitchless",
-      desc: "Saffiano : grain très uniforme + excellente résistance (eau/griffures). En stitchless : strap casual “toute l’année”.",
-      url: "https://delugs.com/products/navy-saffiano-leather-stitchless-watch-strap",
-      img1: "https://delugs.com/cdn/shop/files/Saffiano_Navy_Stitchless_1_160x200_crop_center.jpg?v=1730271000",
-      img2: "https://delugs.com/cdn/shop/files/20221019-DSC04929_a16f4eac-ebc8-4a80-af7c-7ce8a825a95c_160x200_crop_center.jpg?v=1713461726"
-    }
-  ];
+const straps = [
+{
+  id:"handdn-togo",
+  brand:"HANDDN",
+  name:"Navy Togo Leather Strap",
+  material:"Togo calf leather",
+  desc:"Cuir Togo grainé, souple et confortable au quotidien.",
+  url:"https://handdn.com/product/navy-togo-leather-watch-strap/",
+  img1:"https://www.watchvault.com.au/cdn/shop/files/TogoCalfLeatherWatchStrapWatchVaultNavy01_2048x2048.jpg?v=1689055464",
+  img2:"https://www.watchvault.com.au/cdn/shop/files/TogoCalfLeatherWatchStrapWatchVaultNavy02_2048x2048.jpg?v=1689055464"
+},
+{
+  id:"delugs-chevre",
+  brand:"Delugs",
+  name:"Navy Chevre Slim Strap",
+  material:"Chevre (Alran)",
+  desc:"Cuir de chèvre Alran : léger, résistant et très élégant.",
+  url:"https://delugs.com/collections/handcrafted-leather-straps/products/navy-chevre-leather-slim-watch-strap",
+  img1:"https://delugs.com/cdn/shop/files/ChevreNavySlim.jpg?width=1600",
+  img2:"https://delugs.com/cdn/shop/files/20210924-DSC08345_7d86ac49-d94f-43fd-9344-3afccc3f4b45.jpg?width=1600"
+},
+{
+  id:"delugs-alligator",
+  brand:"Delugs",
+  name:"Matte Navy Alligator Signature",
+  material:"Alligator",
+  desc:"Bracelet alligator mat, finition haut de gamme.",
+  url:"https://delugs.com/collections/handcrafted-leather-straps/products/matte-navy-alligator-leather-signature-watch-strap",
+  img1:"https://delugs.com/cdn/shop/files/AlligatorMatteNavySignature_1_f7cd9e3f-8958-4441-970d-4280c129879d.jpg?width=1600",
+  img2:"https://delugs.com/cdn/shop/files/20221019-DSC04926_9ed2398d-09ac-4468-a982-f736979c5815.jpg?width=1600"
+},
+{
+  id:"handdn-chevre",
+  brand:"HANDDN",
+  name:"Navy Alran Chevre Strap",
+  material:"Alran Chevre",
+  desc:"Chevre Alran : luxe discret et excellente durabilité.",
+  url:"https://handdn.com/product/navy-alran-chevre-leather-watch-strap/",
+  img1:"https://www.watchvault.com.au/cdn/shop/files/AlranChevreLeatherWatchStrapWatchVaultNavyBlue02_2048x2048.jpg?v=1688962744",
+  img2:"https://www.watchvault.com.au/cdn/shop/files/AlranChevreLeatherWatchStrapWatchVaultNavyBlue03_2048x2048.jpg?v=1688962744"
+},
+{
+  id:"handdn-saffiano",
+  brand:"HANDDN",
+  name:"Navy Saffiano Strap",
+  material:"Saffiano leather",
+  desc:"Saffiano : cuir structuré, très résistant à l’usure.",
+  url:"https://handdn.com/product/navy-saffiano-leather-watch-strap/",
+  img1:"https://www.watchvault.com.au/cdn/shop/files/SaffianoLeatherWatchStrapWatchVaultRoyalBlue01_2048x2048.jpg?v=1689053564",
+  img2:"https://www.watchvault.com.au/cdn/shop/files/SaffianoLeatherWatchStrapWatchVaultRoyalBlue02_2048x2048.jpg?v=1689053564"
+},
+{
+  id:"wristbuddys-sailcloth",
+  brand:"Wristbuddys",
+  name:"Navy Sailcloth Rubberised",
+  material:"Rubberised sailcloth",
+  desc:"Bracelet sport chic, robuste et polyvalent.",
+  url:"https://wristbuddys.com/en-fr/products/navy-blue-rubberised-sailcloth-leather-strap",
+  img1:"https://wristbuddys.com/cdn/shop/files/navy-blue-rubberised-sailcloth-leather-watch-strap-wristbuddys-front.jpg?width=1600",
+  img2:"https://wristbuddys.com/cdn/shop/files/navy-blue-rubberised-sailcloth-leather-watch-strap-wristbuddys-onwrist.jpg?width=1600"
+},
+{
+  id:"delugs-saffiano-stitchless",
+  brand:"Delugs",
+  name:"Navy Saffiano Stitchless",
+  material:"Saffiano leather",
+  desc:"Saffiano sans couture : look épuré et moderne.",
+  url:"https://delugs.com/products/navy-saffiano-leather-stitchless-watch-strap",
+  img1:"https://delugs.com/cdn/shop/files/Saffiano_Navy_Stitchless_1.jpg?width=1600",
+  img2:"https://delugs.com/cdn/shop/files/20221019-DSC04929_a16f4eac-ebc8-4a80-af7c-7ce8a825a95c.jpg?width=1600"
+}
+];
 
-  // UI state
-  let selectedId = null;
-  let activeBrand = "Tous";
-  let query = "";
+let brand="Tous", query="";
+const grid=document.getElementById("grid");
+const chips=document.getElementById("chips");
+const search=document.getElementById("search");
 
-  const grid = document.getElementById("grid");
-  const chips = document.getElementById("chips");
-  const search = document.getElementById("search");
-  const pickedValue = document.getElementById("pickedValue");
-  const pickedLink = document.getElementById("pickedLink");
+const brands=["Tous",...new Set(straps.map(s=>s.brand))];
+brands.forEach(b=>{
+  const c=document.createElement("span");
+  c.className="chip"+(b==="Tous"?" active":"");
+  c.textContent=b;
+  c.onclick=()=>{brand=b;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));c.classList.add("active");render()};
+  chips.appendChild(c);
+});
 
-  function brands(){
-    const set = new Set(straps.map(s => s.brand));
-    return ["Tous", ...Array.from(set).sort()];
-  }
+search.oninput=e=>{query=e.target.value.toLowerCase();render()};
 
-  function renderChips(){
-    chips.innerHTML = "";
-    brands().forEach(b => {
-      const el = document.createElement("div");
-      el.className = "chip" + (b === activeBrand ? " active" : "");
-      el.textContent = b;
-      el.onclick = () => { activeBrand = b; render(); renderChips(); };
-      chips.appendChild(el);
-    });
-  }
-
-  function matches(s){
-    const hay = (s.brand + " " + s.name + " " + s.material + " " + s.desc).toLowerCase();
-    const okBrand = (activeBrand === "Tous") || (s.brand === activeBrand);
-    const okQuery = !query || hay.includes(query);
-    return okBrand && okQuery;
-  }
-
-  function setSelected(id){
-    selectedId = id;
-    const s = straps.find(x => x.id === id);
-    pickedValue.textContent = s ? `${s.brand} — ${s.name}` : "Aucune";
-    pickedLink.href = s ? s.url : "#";
-    pickedLink.style.opacity = s ? "1" : ".55";
-    pickedLink.style.pointerEvents = s ? "auto" : "none";
-    render();
-  }
-
-  function cardTemplate(s){
-    const card = document.createElement("div");
-    card.className = "card" + (s.id === selectedId ? " selected" : "");
-    card.onclick = () => setSelected(s.id);
-
-    card.innerHTML = `
-      <div class="top">
-        <div class="row">
-          <div>
-            <div class="brand">${s.brand}</div>
-            <h3 class="name">${s.name}</h3>
-          </div>
-        </div>
-        <div class="badges">
+function render(){
+  grid.innerHTML="";
+  straps.filter(s=>(brand==="Tous"||s.brand===brand)&&JSON.stringify(s).toLowerCase().includes(query))
+    .forEach(s=>{
+      const d=document.createElement("div");
+      d.className="card";
+      d.innerHTML=`
+        <div class="top">
+          <div class="brand">${s.brand}</div>
+          <div class="name">${s.name}</div>
           <span class="badge">${s.material}</span>
+          <div class="desc">${s.desc}</div>
         </div>
-        <p class="desc">${s.desc}</p>
-      </div>
-
-      <div class="images">
-        <img loading="lazy" src="${s.img1}" alt="${s.name} photo 1">
-        <img loading="lazy" src="${s.img2}" alt="${s.name} photo 2">
-      </div>
-
-      <div class="actions">
-        <a class="btn" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Voir produit</a>
-        <span class="small">${s.id === selectedId ? "✅ Sélectionné" : "Cliquer pour sélectionner"}</span>
-      </div>
-    `;
-    return card;
-  }
-
-  function render(){
-    grid.innerHTML = "";
-    const filtered = straps.filter(matches);
-
-    filtered.forEach(s => grid.appendChild(cardTemplate(s)));
-
-    if (!filtered.length){
-      const empty = document.createElement("div");
-      empty.style.gridColumn = "1 / -1";
-      empty.style.padding = "18px";
-      empty.style.color = "var(--muted)";
-      empty.textContent = "Aucun bracelet ne correspond à ce filtre.";
-      grid.appendChild(empty);
-    }
-  }
-
-  // init
-  renderChips();
-  render();
-  pickedLink.style.opacity = ".55";
-  pickedLink.style.pointerEvents = "none";
-
-  search.addEventListener("input", (e) => {
-    query = (e.target.value || "").trim().toLowerCase();
-    render();
-  });
+        <div class="images">
+          <img src="${s.img1}" loading="lazy">
+          <img src="${s.img2}" loading="lazy">
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="${s.url}" target="_blank">Voir le produit</a>
+        </div>`;
+      grid.appendChild(d);
+    });
+}
+render();
 </script>
 </body>
 </html>
+
